@@ -1,4 +1,7 @@
 #![feature(plugin, custom_derive)]
+#![feature(advanced_slice_patterns)]
+#![feature(match_default_bindings)]
+
 #![plugin(rocket_codegen)]
 
 #[cfg(test)]
@@ -34,6 +37,7 @@ use rocket_contrib::Json;
 
 mod index;
 
+
 #[get("/convert?<rss_feed>")]
 fn convert(rss_feed: RssFeedConfig) -> Json<LaMetricResponse> {
     Json(
@@ -66,6 +70,7 @@ fn convert(rss_feed: RssFeedConfig) -> Json<LaMetricResponse> {
             .unwrap(),
     )
 }
+
 
 fn rocket() -> Rocket {
     rocket::ignite().mount("/", routes![index::index, convert])
