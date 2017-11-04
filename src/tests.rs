@@ -53,6 +53,25 @@ fn test_custom_title_and_icon_with_empty_rss() {
 }
 
 #[test]
+fn test_invalid_rss() {
+    let resp: LaMetricResponse = get_lametric_response(format!(
+        "/convert/?title=Custom&icon=icon&limit=0&url=http://127.0.0.1.com/plop"
+    ));
+
+    assert_eq!(resp.frames.len(), 2);
+
+    let last = &resp.frames[1];
+
+    let text_frame = match last {
+        LaMetricFrame::TextFrame(text_frame) => text_frame,
+    };
+
+    assert!(text_frame.text.contains(
+        "http://127.0.0.1.com/plop: failed to lookup address information",
+    ))
+}
+
+#[test]
 fn test_valid_la_metric_output() {
     assert_eq!(
         get_lametric_response(format!(
