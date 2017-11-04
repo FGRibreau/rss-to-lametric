@@ -1,4 +1,4 @@
-# 🛫 Fastest way to expose a RSS feed to your [LaMetric](http://bit.ly/2zcEaTz) 🎩
+# Your favorite RSS feed directly from your [LaMetric](http://bit.ly/2zcEaTz) 🎩
 
 [![lametric-app](/docs/lametric-app.jpg)](http://bit.ly/2zyD4SA)
 
@@ -7,7 +7,30 @@
 
 ## 📱 LaMetric apps
 
-- [🇫🇷-*NEWS*] [Ouest-France app](http://bit.ly/2zyD4SA)
+### World News 
+
+- 🇫🇷 [Ouest-France](http://bit.ly/2zyD4SA)
+- 🇫🇷 [Actu.fr](http://bit.ly/2lQ7TfO)
+- 🇫🇷 [Presse Ocean](http://bit.ly/2zxGZiN)
+- 🇫🇷 [20 minutes](http://bit.ly/2zjSrO8)
+- 🇫🇷 [Voiles Et Voiliers](http://bit.ly/2lQ2Bkm)
+- 🇫🇷 [Courrier de l'Ouest](http://bit.ly/2lRj5so)
+
+- 🇺🇸 [New York Times](http://bit.ly/2yuBMYO)
+- 🇺🇸 [Washington Post](http://bit.ly/2zdXQq8)
+
+- 🇬🇧 [The Guardian](http://bit.ly/2y0bXvA)
+
+- 🇩🇪 [Der Spiegel](http://bit.ly/2hb0ia1)
+
+### Tech/Startup
+
+- 🇫🇷 [BFM Business](http://bit.ly/2zeGdGZ)
+- 🇺🇸 [Tech Crunch](http://bit.ly/2ze84qM)
+- 🇺🇸 [Mashable](http://bit.ly/2hc9fQn)
+- 🇺🇸 [Lifehacker](http://bit.ly/2xZbc5H)
+- 🇺🇸 [Engadget](http://bit.ly/2lRyRTZ)
+
 
 ## 👉 Try it online
 
