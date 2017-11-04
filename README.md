@@ -87,28 +87,20 @@ curl --silent "http://localhost:8080/convert?title=Ouest-France&icon=i14532&limi
 {
   "frames": [
     {
-      "TextFrame": {
-        "text": "Ouest-France",
-        "icon": "i14532"
-      }
+      "text": "Ouest-France",
+      "icon": "i14532"
     },
     {
-      "TextFrame": {
-        "text": "Dopage. Le laboratoire français suspendu jusqu'à six mois",
-        "icon": null
-      }
+      "text": "France. Des personnalités signent contre les agressions sexuelles",
+      "icon": null
     },
     {
-      "TextFrame": {
-        "text": "Stade Rennais. Olivier Létang nommé président délégué et manager général",
-        "icon": null
-      }
+      "text": "NRJ Music Awards. Qui sont les gagnants de la soirée ?",
+      "icon": null
     },
     {
-      "TextFrame": {
-        "text": "Stade Rennais. Le président du club René Ruello annonce sa démission",
-        "icon": null
-      }
+      "text": "Des dizaines de morts dans un attentat de Daech en Syrie",
+      "icon": null
     }
   ]
 }
