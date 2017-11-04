@@ -20,13 +20,13 @@
 
 ```bash
 cargo install rss-to-lametric
-rss-to-lametric
 ```
 
 
-## 🤓 Documentation
+## 🤓 Self-documentation
 
 ```bash
+rss-to-lametric
 curl --silent http://localhost:8000/
 ```
 
@@ -88,6 +88,6 @@ curl --silent "http://localhost:8000/convert?title=Ouest-France&icon=i14532&limi
 ```
 
 ## ⚙️ Deployment 
-- Deploy it (e.g. on [Clever-cloud](https://clever-cloud.com))
+- Deploy it (the fastest way is to use [Clever-cloud](https://www.clever-cloud.com/doc/rust/rust/) thanks to their awesome native Rust support)
 - [Create and configure your app](https://developer.lametric.com/)
 - Done!
