@@ -1,15 +1,13 @@
-<!-- # @todo put referral URL here -->
+> 🛫 Fastest way to expose a RSS feed to your [LaMetric](http://bit.ly/2zcEaTz) 🎩
 
-> 🛫 Fastest way to expose a RSS feed to your [LaMetric](https://developer.lametric.com/) 🎩
-
-![lametric-app](/docs/lametric-app.jpg)
+[![lametric-app](/docs/lametric-app.jpg)](http://bit.ly/2zyD4SA)
 
 [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/FGRibreau/rss-to-lametric) [![codecov](https://codecov.io/gh/FGRibreau/rss-to-lametric/branch/master/graph/badge.svg)](https://codecov.io/gh/FGRibreau/rss-to-lametric)
 [![Cargo version](https://img.shields.io/crates/v/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/l/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/d/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric)
 
 ## 📱 LaMetric apps
 
-- Coming soon...
+- [🇫🇷-*NEWS*] [Ouest-France app](http://bit.ly/2zyD4SA)
 
 ## 👉 Try it online
 
@@ -89,5 +87,5 @@ curl --silent "http://localhost:8000/convert?title=Ouest-France&icon=i14532&limi
 
 ## ⚙️ Deployment 
 - Deploy it (the fastest way is to use [Clever-cloud](https://www.clever-cloud.com/doc/rust/rust/) thanks to their awesome native Rust support)
-- [Create and configure your app](https://developer.lametric.com/)
+- [Create and configure your app](http://bit.ly/2hcJobb)
 - Done!
