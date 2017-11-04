@@ -7,8 +7,16 @@
 [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/FGRibreau/rss-to-lametric) [![codecov](https://codecov.io/gh/FGRibreau/rss-to-lametric/branch/master/graph/badge.svg)](https://codecov.io/gh/FGRibreau/rss-to-lametric)
 [![Cargo version](https://img.shields.io/crates/v/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/l/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/d/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Docker Automated build](https://img.shields.io/docker/automated/fgribreau/rss-to-lametric.svg)](https://hub.docker.com/r/fgribreau/rss-to-lametric) [![Docker Pulls](https://img.shields.io/docker/pulls/fgribreau/rss-to-lametric.svg)](https://hub.docker.com/r/fgribreau/rss-to-lametric) [![Docker Stars](https://img.shields.io/docker/stars/fgribreau/rss-to-lametric.svg)](https://hub.docker.com/r/fgribreau/rss-to-lametric)
 
+## 📱 LaMetric apps
 
-# Setup
+- Coming soon...
+
+## 👉 Try it online
+
+[https://rss-to-lametric.cleverapps.io/convert?title=Ouest-France&icon=i14532&limit=3&url=https://www.ouest-france.fr/rss-en-continu.xml](http://rss-to-lametric.cleverapps.io/convert?title=Ouest-France&icon=i14532&limit=3&url=https://www.ouest-france.fr/rss-en-continu.xml)
+
+
+## ⏲ Setup
 
 ```bash
 cargo install rss-to-lametric
@@ -16,7 +24,7 @@ rss-to-lametric
 ```
 
 
-# 🤓 Documentation
+## 🤓 Documentation
 
 ```bash
 curl --silent http://localhost:8000/
@@ -42,7 +50,7 @@ curl --silent http://localhost:8000/
 }
 ```
 
-# 🎩 Convert any RSS to LaMetric `TextFrame`
+## 🎩 Convert any RSS to LaMetric `TextFrame`
 
 ```bash
 curl --silent "http://localhost:8000/convert?title=Ouest-France&icon=i14532&limit=3&url=https://www.ouest-france.fr/rss-en-continu.xml"
@@ -79,7 +87,7 @@ curl --silent "http://localhost:8000/convert?title=Ouest-France&icon=i14532&limi
 }
 ```
 
-# ⚙️ Deployment 
+## ⚙️ Deployment 
 - Deploy it (e.g. on [Clever-cloud](https://clever-cloud.com))
 - [Create and configure your app](https://developer.lametric.com/)
 - Done!
