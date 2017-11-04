@@ -1,7 +1,7 @@
+
 extern crate serde_json;
 
 use rocket::local::Client;
-use rocket::http::Status;
 use la_metric::LaMetricResponse;
 use la_metric::LaMetricFrame;
 use la_metric::TextFrame;
@@ -11,19 +11,33 @@ lazy_static! {
     static ref RSS_FEED: String = "http://www.mocky.io/v2/59fcfedb310000cb1b4fc7a9".to_string();
 }
 
-fn get(url: String) -> LaMetricResponse {
+fn get_lametric_response(url: String) -> LaMetricResponse {
     let rocket = super::rocket();
     let client = Client::new(rocket).expect("Rocket client");
     let mut res = client.get(url).dispatch();
     res.body_string()
         .map(|x: String| serde_json::from_str(&x).unwrap())
-        .unwrap()
+        .expect("Response should be deserializable to LaMetricResponse")
 }
+
+fn get(url: &str) -> String {
+    let rocket = super::rocket();
+    let client = Client::new(rocket).expect("Rocket client");
+    let mut res = client.get(url).dispatch();
+    res.body_string().expect("Response should be a string")
+}
+
+
+#[test]
+fn test_main_route() {
+    assert!(get("/").contains("rss-to-lametric"));
+}
+
 
 #[test]
 fn test_custom_title_and_icon_with_empty_rss() {
     assert_eq!(
-        get(format!(
+        get_lametric_response(format!(
             "/convert/?title=Custom&icon=icon&limit=0&url={}",
             &**RSS_FEED
         )),
@@ -41,7 +55,7 @@ fn test_custom_title_and_icon_with_empty_rss() {
 #[test]
 fn test_valid_la_metric_output() {
     assert_eq!(
-        get(format!(
+        get_lametric_response(format!(
             "/convert/?title=Ouest-France&icon=i14532&limit=4&url={}",
             &**RSS_FEED
         )),
