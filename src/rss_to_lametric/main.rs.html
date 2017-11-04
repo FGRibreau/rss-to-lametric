@@ -119,8 +119,16 @@
 <span id="74">74</span>
 <span id="75">75</span>
 <span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
 </pre><pre class="rust ">
 <span class="attribute">#![<span class="ident">feature</span>(<span class="ident">plugin</span>, <span class="ident">custom_derive</span>)]</span>
+<span class="attribute">#![<span class="ident">feature</span>(<span class="ident">advanced_slice_patterns</span>)]</span>
+<span class="attribute">#![<span class="ident">feature</span>(<span class="ident">match_default_bindings</span>)]</span>
+
 <span class="attribute">#![<span class="ident">plugin</span>(<span class="ident">rocket_codegen</span>)]</span>
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
@@ -156,6 +164,7 @@
 
 <span class="kw">mod</span> <span class="ident">index</span>;
 
+
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/convert?&lt;rss_feed&gt;&quot;</span>)]</span>
 <span class="kw">fn</span> <span class="ident">convert</span>(<span class="ident">rss_feed</span>: <span class="ident">RssFeedConfig</span>) <span class="op">-&gt;</span> <span class="ident">Json</span><span class="op">&lt;</span><span class="ident">LaMetricResponse</span><span class="op">&gt;</span> {
     <span class="ident">Json</span>(
@@ -188,6 +197,7 @@
             .<span class="ident">unwrap</span>(),
     )
 }
+
 
 <span class="kw">fn</span> <span class="ident">rocket</span>() <span class="op">-&gt;</span> <span class="ident">Rocket</span> {
     <span class="ident">rocket</span>::<span class="ident">ignite</span>().<span class="ident">mount</span>(<span class="string">&quot;/&quot;</span>, <span class="macro">routes</span><span class="macro">!</span>[<span class="ident">index</span>::<span class="ident">index</span>, <span class="ident">convert</span>])
