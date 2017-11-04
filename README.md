@@ -1,4 +1,7 @@
-# Your favorite RSS feed directly from your [LaMetric](http://bit.ly/2zcEaTz) 🎩
+> Your favorite RSS feed directly from your [LaMetric](http://bit.ly/2zcEaTz) 🎩
+
+[![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/FGRibreau/rss-to-lametric) [![codecov](https://codecov.io/gh/FGRibreau/rss-to-lametric/branch/master/graph/badge.svg)](https://codecov.io/gh/FGRibreau/rss-to-lametric)
+[![Cargo version](https://img.shields.io/crates/v/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/l/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/d/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric)
 
 <p align="center">
   <a href="http://bit.ly/2zyD4SA">
@@ -32,10 +35,6 @@
 - 🇺🇸 [Mashable](http://bit.ly/2hc9fQn)
 - 🇺🇸 [Lifehacker](http://bit.ly/2xZbc5H)
 - 🇺🇸 [Engadget](http://bit.ly/2lRyRTZ)
-
-
-[![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/FGRibreau/rss-to-lametric) [![codecov](https://codecov.io/gh/FGRibreau/rss-to-lametric/branch/master/graph/badge.svg)](https://codecov.io/gh/FGRibreau/rss-to-lametric)
-[![Cargo version](https://img.shields.io/crates/v/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/l/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/d/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric)
 
 
 <p align="center">
