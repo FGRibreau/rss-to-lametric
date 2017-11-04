@@ -41,7 +41,7 @@ curl --silent http://localhost:8000/
 # 🎩 Convert any RSS to LaMetric `TextFrame`
 
 ```bash
-curl --silent http://localhost:8000/convert\?title\=Ouest-France\&icon\=i14532\&limit\=3\&url\=https://www.ouest-france.fr/rss-en-continu.xml
+curl --silent "http://localhost:8000/convert?title=Ouest-France&icon=i14532&limit=3&url=https://www.ouest-france.fr/rss-en-continu.xml"
 ```
 
 ```json
