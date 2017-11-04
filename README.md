@@ -1,4 +1,4 @@
-> 🛫 Fastest way to expose a RSS feed to your [LaMetric](http://bit.ly/2zcEaTz) 🎩
+# 🛫 Fastest way to expose a RSS feed to your [LaMetric](http://bit.ly/2zcEaTz) 🎩
 
 [![lametric-app](/docs/lametric-app.jpg)](http://bit.ly/2zyD4SA)
 
