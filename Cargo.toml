@@ -6,8 +6,8 @@ homepage = "https://github.com/FGRibreau/rss-to-lametric"
 repository = "https://github.com/FGRibreau/rss-to-lametric"
 readme = "README.md"
 documentation = "https://docs.rs/rss-to-lametric"
-description = "Rss feed to LaMetric app"
-keywords = ["rss", "lametric", "converter"]
+description = "🛫 Fastest way to expose a RSS feed to your LaMetric - http://bit.ly/2zcEaTz 🎩"
+keywords = ["rss", "lametric"]
 categories = ["web-programming"]
 license = "MIT"
 

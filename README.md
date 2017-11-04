@@ -25,12 +25,12 @@ cargo install rss-to-lametric
 
 ```bash
 rss-to-lametric
-curl --silent http://localhost:8000/
+curl --silent http://localhost:8080/
 ```
 
 ```json
 {
-  "description": "Rss feed to LaMetric app",
+  "description": "🛫 Fastest way to expose a RSS feed to your LaMetric - http://bit.ly/2zcEaTz 🎩",
   "homepage": "https://github.com/FGRibreau/rss-to-lametric",
   "name": "rss-to-lametric",
   "usage": [
@@ -51,7 +51,7 @@ curl --silent http://localhost:8000/
 ## 🎩 Convert any RSS to LaMetric `TextFrame`
 
 ```bash
-curl --silent "http://localhost:8000/convert?title=Ouest-France&icon=i14532&limit=3&url=https://www.ouest-france.fr/rss-en-continu.xml"
+curl --silent "http://localhost:8080/convert?title=Ouest-France&icon=i14532&limit=3&url=https://www.ouest-france.fr/rss-en-continu.xml"
 ```
 
 ```json
