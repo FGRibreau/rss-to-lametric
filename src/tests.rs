@@ -72,7 +72,7 @@ fn test_invalid_rss() {
 }
 
 #[test]
-fn test_valid_la_metric_output() {
+fn test_valid_la_metric_data_output() {
     assert_eq!(
         get_lametric_response(format!(
             "/convert/?title=Ouest-France&icon=i14532&limit=4&url={}",
@@ -105,5 +105,16 @@ fn test_valid_la_metric_output() {
                 }),
             ],
         }
+    );
+}
+
+#[test]
+fn test_valid_la_metric_json_output() {
+    assert_eq!(
+        get(&format!(
+            "/convert/?title=Ouest-France&icon=i14532&limit=4&url={}",
+            &**RSS_FEED
+        )),
+        "{\"frames\":[{\"text\":\"Ouest-France\",\"icon\":\"i14532\"},{\"text\":\"Stade Rennais. Le président du club René Ruello annonce sa démission\",\"icon\":null},{\"text\":\"Direction de LREM. 4 listes en compétition pour le bureau exécutif\",\"icon\":null},{\"text\":\"La police de New York a un \\\"vrai dossier\\\" sur Weinstein\",\"icon\":null},{\"text\":\"Ligue 1. Le Stade Rennais poursuit sa belle série face à Bordeaux\",\"icon\":null}]}"
     );
 }
