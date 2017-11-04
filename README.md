@@ -1,11 +1,11 @@
-[![Cargo version](https://img.shields.io/crates/v/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/l/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/d/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Docker Automated build](https://img.shields.io/docker/automated/fgribreau/rss-to-lametric.svg)](https://hub.docker.com/r/fgribreau/rss-to-lametric) [![Docker Pulls](https://img.shields.io/docker/pulls/fgribreau/rss-to-lametric.svg)](https://hub.docker.com/r/fgribreau/rss-to-lametric) [![Docker Stars](https://img.shields.io/docker/stars/fgribreau/rss-to-lametric.svg)](https://hub.docker.com/r/fgribreau/rss-to-lametric) [![codecov](https://codecov.io/gh/FGRibreau/rss-to-lametric/branch/master/graph/badge.svg)](https://codecov.io/gh/FGRibreau/rss-to-lametric)
-
-
 <!-- # @todo put referral URL here -->
 
-🛫 Fastest way to expose a RSS feed to your [LaMetric](https://developer.lametric.com/) 🎩.
+> 🛫 Fastest way to expose a RSS feed to your [LaMetric](https://developer.lametric.com/) 🎩
 
 ![lametric-app](/docs/lametric-app.jpg)
+
+[![Cargo version](https://img.shields.io/crates/v/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/l/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/d/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Docker Automated build](https://img.shields.io/docker/automated/fgribreau/rss-to-lametric.svg)](https://hub.docker.com/r/fgribreau/rss-to-lametric) [![Docker Pulls](https://img.shields.io/docker/pulls/fgribreau/rss-to-lametric.svg)](https://hub.docker.com/r/fgribreau/rss-to-lametric) [![Docker Stars](https://img.shields.io/docker/stars/fgribreau/rss-to-lametric.svg)](https://hub.docker.com/r/fgribreau/rss-to-lametric) [![codecov](https://codecov.io/gh/FGRibreau/rss-to-lametric/branch/master/graph/badge.svg)](https://codecov.io/gh/FGRibreau/rss-to-lametric)
+
 
 # Setup
 
