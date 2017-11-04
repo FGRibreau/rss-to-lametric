@@ -1,14 +1,23 @@
 <!-- # @todo put referral URL here -->
 
-Fastest way to expose an RSS feed to your [LaMetric](https://developer.lametric.com/).
+🛫 Fastest way to expose a RSS feed to your [LaMetric](https://developer.lametric.com/) 🎩.
 
 ![lametric-app](/docs/lametric-app.jpg)
+
+# Setup
+
+```bash
+cargo install rss-to-lametric
+rss-to-lametric
+```
+
 
 # 🤓 Documentation
 
 ```bash
 curl --silent http://localhost:8000/
 ```
+
 ```json
 {
   "description": "Rss feed to LaMetric app",
@@ -29,7 +38,7 @@ curl --silent http://localhost:8000/
 }
 ```
 
-# 🎩 Usage
+# 🎩 Convert any RSS to LaMetric `TextFrame`
 
 ```bash
 curl --silent http://localhost:8000/convert\?title\=Ouest-France\&icon\=i14532\&limit\=3\&url\=https://www.ouest-france.fr/rss-en-continu.xml
