@@ -1,6 +1,10 @@
 # Your favorite RSS feed directly from your [LaMetric](http://bit.ly/2zcEaTz) 🎩
 
-[![lametric-app](https://media.giphy.com/media/7ovkxT9UZKyhW/giphy.gif)](http://bit.ly/2zyD4SA)
+<p align="center">
+  <a href="http://bit.ly/2zyD4SA">
+  <img src="https://media.giphy.com/media/xT0xeG7WTqh4yQnnsk/giphy.gif"/>  
+  </a>
+</p>
 
 
 ## 📱 LaMetric apps
@@ -39,6 +43,12 @@
 [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/FGRibreau/rss-to-lametric) [![codecov](https://codecov.io/gh/FGRibreau/rss-to-lametric/branch/master/graph/badge.svg)](https://codecov.io/gh/FGRibreau/rss-to-lametric)
 [![Cargo version](https://img.shields.io/crates/v/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/l/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/d/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric)
 
+
+<p align="center">
+  <a href="http://bit.ly/2zyD4SA">
+  <img src="/docs/lametric-app.jpg"/>  
+  </a>
+</p>
 
 ## ⏲ Setup
 
