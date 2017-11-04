@@ -4,6 +4,7 @@ use rssfeed::Feed;
 
 
 #[derive(Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[serde(untagged)]
 pub enum LaMetricFrame {
     TextFrame(TextFrame),
 }
