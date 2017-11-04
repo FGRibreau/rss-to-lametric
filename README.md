@@ -7,20 +7,20 @@
 
 ## 📱 LaMetric apps
 
-### World News 
+### French news
 
-- 🇫🇷 [Ouest-France](http://bit.ly/2zyD4SA)
+- 🇫🇷 [Ouest-France 👌](http://bit.ly/2zyD4SA)
 - 🇫🇷 [Actu.fr](http://bit.ly/2lQ7TfO)
 - 🇫🇷 [Presse Ocean](http://bit.ly/2zxGZiN)
 - 🇫🇷 [20 minutes](http://bit.ly/2zjSrO8)
 - 🇫🇷 [Voiles Et Voiliers](http://bit.ly/2lQ2Bkm)
 - 🇫🇷 [Courrier de l'Ouest](http://bit.ly/2lRj5so)
 
+### World news
+
 - 🇺🇸 [New York Times](http://bit.ly/2yuBMYO)
 - 🇺🇸 [Washington Post](http://bit.ly/2zdXQq8)
-
 - 🇬🇧 [The Guardian](http://bit.ly/2y0bXvA)
-
 - 🇩🇪 [Der Spiegel](http://bit.ly/2hb0ia1)
 
 ### Tech/Startup
