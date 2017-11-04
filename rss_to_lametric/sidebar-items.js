@@ -1,0 +1,1 @@
+initSidebarItems({"static":[["static_rocket_route_info_for_convert","Rocket code generated static route information structure."]]});
