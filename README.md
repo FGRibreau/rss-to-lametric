@@ -17,7 +17,6 @@
 - 🇫🇷 [Ouest-France 👌](http://bit.ly/2zyD4SA)
 - 🇫🇷 [Actu.fr](http://bit.ly/2lQ7TfO)
 - 🇫🇷 [Presse Ocean](http://bit.ly/2zxGZiN)
-- 🇫🇷 [20 minutes](http://bit.ly/2zjSrO8)
 - 🇫🇷 [Voiles Et Voiliers](http://bit.ly/2lQ2Bkm)
 - 🇫🇷 [Courrier de l'Ouest](http://bit.ly/2lRj5so)
 
