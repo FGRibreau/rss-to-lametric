@@ -110,6 +110,9 @@ curl --silent "http://localhost:8080/convert?title=Ouest-France&icon=i14532&limi
 - [Create and configure your app](http://bit.ly/2hcJobb)
 - Done!
 
+> ## ❤️ Shameless plug
+> - [**Charts, simple as a URL**. No more server-side rendering pain, 1 url = 1 chart](https://image-charts.com)
+> - [Looking for a free **Redis GUI**?](http://redsmin.com) [Or for **real-time alerting** & monitoring for Redis?](http://redsmin.com)
 
 ## 🦄 You love it? Donate :)
 
