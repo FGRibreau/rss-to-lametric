@@ -1,15 +1,8 @@
-language: rust
+sudo: required
 
-sudo: false
+services:
+  - docker
 
-rust:
-  # - stable
-  # - beta
-  - nightly
-
-# matrix:
-#   allow_failures:
-#     - rust: nightly
 
 env:
   global:
@@ -26,6 +19,12 @@ addons:
       - gcc
       - binutils-dev
       - libiberty-dev
+
+script:
+  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:latest rustup update nightly
+  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:latest rustup default nightly
+  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:latest cargo build
+  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:latest cargo test
 
 after_success: |
   wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
