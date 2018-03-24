@@ -1,5 +1,4 @@
 #![feature(plugin, custom_derive)]
-#![feature(advanced_slice_patterns)]
 #![feature(match_default_bindings)]
 
 #![plugin(rocket_codegen)]
