@@ -6,7 +6,8 @@ use reqwest::Response;
 use feed_rs::parser::parse as ParseRSS;
 pub use feed_rs::Feed;
 
-#[derive(Debug, Deserialize, Serialize, FromForm, Clone)]
+// Debug, Deserialize, Serialize, FromForm, Clone
+#[derive(FromForm, Clone, Serialize, Debug)]
 pub struct RssFeedConfig {
     pub url: String,
     pub title: String,

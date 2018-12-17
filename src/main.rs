@@ -1,18 +1,15 @@
-#![feature(plugin, custom_derive)]
-#![feature(match_default_bindings)]
+#![feature(custom_derive)]
+#![feature(custom_attribute)]
+#![feature(proc_macro_hygiene, decl_macro)]
 
-#![plugin(rocket_codegen)]
 
 #[cfg(test)]
-#[macro_use]
-extern crate lazy_static;
+#[macro_use] extern crate lazy_static;
 
 extern crate reqwest;
-extern crate rocket;
-#[macro_use]
-extern crate rocket_contrib;
-#[macro_use]
-extern crate serde_derive;
+#[macro_use]  extern crate rocket;
+#[macro_use] extern crate rocket_contrib;
+#[macro_use] extern crate serde_derive;
 extern crate serde;
 
 extern crate feed_rs;
@@ -32,13 +29,14 @@ use rssfeed::RssFeedConfig;
 use rssfeed::RssFeedError;
 
 use rocket::Rocket;
-use rocket_contrib::Json;
+use rocket_contrib::json::Json;
+use rocket::request::Form;
 
 mod index;
 
 
-#[get("/convert?<rss_feed>")]
-fn convert(rss_feed: RssFeedConfig) -> Json<LaMetricResponse> {
+#[get("/convert?<rss_feed..>")]
+fn convert(rss_feed: Form<RssFeedConfig>) -> Json<LaMetricResponse> {
     Json(
         rss_feed
             .load()

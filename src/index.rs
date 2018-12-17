@@ -1,10 +1,10 @@
-use rocket_contrib::{Json, Value};
+use rocket_contrib::json::{JsonValue};
 use rssfeed::RssFeedConfig;
 
 
 #[get("/")]
-pub fn index() -> Json<Value> {
-    Json(json!({
+pub fn index() -> JsonValue {
+    json!({
         "name": env!("CARGO_PKG_NAME"),
         "description": env!("CARGO_PKG_DESCRIPTION"),
         "homepage": env!("CARGO_PKG_HOMEPAGE"),
@@ -18,5 +18,5 @@ pub fn index() -> Json<Value> {
                 limit: 10
             }
       })]
-  }))
+  })
 }
