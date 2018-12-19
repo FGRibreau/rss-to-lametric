@@ -14,6 +14,7 @@ rust:
 env:
   global:
   - RUSTFLAGS="-C link-dead-code"
+  - RUST_VERSION=nightly-2018-12-18
 
 addons:
   apt:
