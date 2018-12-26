@@ -67,7 +67,7 @@ fn test_invalid_rss() {
     };
 
     assert!(text_frame.text.contains(
-        "http://127.0.0.1.com/plop: failed to lookup address information",
+        "failed to lookup address information",
     ))
 }
 
