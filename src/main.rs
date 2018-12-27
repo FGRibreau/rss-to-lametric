@@ -3,21 +3,29 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 
 
-#[cfg(test)]
-#[macro_use] extern crate lazy_static;
+#[macro_use]
+extern crate lazy_static;
 
 extern crate reqwest;
-#[macro_use]  extern crate rocket;
-#[macro_use] extern crate rocket_contrib;
-#[macro_use] extern crate serde_derive;
+#[macro_use]
+extern crate rocket;
+#[macro_use]
+extern crate rocket_contrib;
+#[macro_use]
+extern crate serde_derive;
 extern crate serde;
 
+
 extern crate feed_rs;
+
+extern crate lru_time_cache;
+
 
 #[cfg(test)]
 mod tests;
 
 mod la_metric;
+
 use la_metric::LaMetricFrame;
 use la_metric::LaMetricResponse;
 use la_metric::TextFrame;
@@ -25,14 +33,27 @@ use la_metric::FeedConvertCommand;
 use la_metric::LaMetricFrames;
 
 mod rssfeed;
+
 use rssfeed::RssFeedConfig;
 use rssfeed::RssFeedError;
+use lru_time_cache::LruCache;
 
 use rocket::Rocket;
 use rocket_contrib::json::Json;
 use rocket::request::Form;
+use std::string::String;
+use feed_rs::Feed;
+use std::time::Duration;
+use std::ops::Deref;
+use std::sync::Mutex;
+
 
 mod index;
+
+
+lazy_static! {
+    static ref APP_CACHE: Mutex<LruCache<String, Feed>> = Mutex::new(LruCache::<String, Feed>::with_expiry_duration_and_capacity(Duration::from_secs(3600), 50));
+}
 
 
 #[get("/convert?<rss_feed..>")]
@@ -70,6 +91,9 @@ fn convert(rss_feed: Form<RssFeedConfig>) -> Json<LaMetricResponse> {
 
 
 fn rocket() -> Rocket {
+    // Ensure APP_CACHE is bound
+    let _ = APP_CACHE.deref();
+
     rocket::ignite().mount("/", routes![index::index, convert])
 }
 
