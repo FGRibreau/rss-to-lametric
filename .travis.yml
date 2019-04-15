@@ -21,10 +21,7 @@ addons:
       - libiberty-dev
 
 script:
-  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:1.32-slim rustup update $RUST_VERSION
-  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:1.32-slim rustup default $RUST_VERSION
-  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:1.32-slim cargo build
-  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:1.32-slim cargo test
+  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:1.32 bash -c "rustup update $RUST_VERSION && rustup default $RUST_VERSION && cargo build && cargo test"
 
 after_success: |
   wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
