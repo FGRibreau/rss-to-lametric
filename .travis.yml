@@ -3,11 +3,10 @@ sudo: required
 services:
   - docker
 
-
 env:
   global:
-  - RUSTFLAGS="-C link-dead-code"
-  - RUST_VERSION=nightly-2018-12-06
+    - RUSTFLAGS="-C link-dead-code"
+    - RUST_VERSION=nightly-2018-12-06
 
 addons:
   apt:
@@ -22,10 +21,10 @@ addons:
       - libiberty-dev
 
 script:
-  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:latest rustup update $RUST_VERSION
-  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:latest rustup default $RUST_VERSION
-  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:latest cargo build
-  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:latest cargo test
+  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:1.32-slim rustup update $RUST_VERSION
+  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:1.32-slim rustup default $RUST_VERSION
+  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:1.32-slim cargo build
+  - docker run -e RUSTUP_HOME=/app/rustup -e CARGO_HOME=/app/cargo -v $(pwd):/app -w /app rust:1.32-slim cargo test
 
 after_success: |
   wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
