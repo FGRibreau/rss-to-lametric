@@ -22,7 +22,7 @@ pre-release-replacements = [ {file="README.md", search="Current release: [a-z0-9
 [dependencies]
 lazy_static = "0.2"
 rocket = "0.4.0"
-serde = "1.0.106"
+serde = "1.0.110"
 serde_json = "1.0.53"
 serde_derive = "1.0.110"
 reqwest = "0.9.5"
