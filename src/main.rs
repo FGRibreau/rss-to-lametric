@@ -52,7 +52,7 @@ mod index;
 
 
 lazy_static! {
-    static ref APP_CACHE: Mutex<LruCache<String, Feed>> = Mutex::new(LruCache::<String, Feed>::with_expiry_duration_and_capacity(Duration::from_secs(3600), 50));
+    static ref APP_CACHE: Mutex<LruCache<String, Feed>> = Mutex::new(LruCache::<String, Feed>::with_expiry_duration(Duration::from_secs(60*10))); // 10min
 }
 
 
