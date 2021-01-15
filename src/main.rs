@@ -1,64 +1,43 @@
-#![feature(custom_derive)]
-#![feature(custom_attribute)]
-#![feature(proc_macro_hygiene, decl_macro)]
-
-
 #[macro_use]
 extern crate lazy_static;
 
-extern crate reqwest;
-#[macro_use]
-extern crate rocket;
-#[macro_use]
-extern crate rocket_contrib;
-#[macro_use]
-extern crate serde_derive;
-extern crate serde;
+use std::ops::Deref;
+use std::string::String;
+use std::sync::{Mutex, RwLock};
+use std::time::Duration;
 
+use actix_web::{App, get, HttpResponse, HttpServer, middleware, Responder, web};
+use actix_web::http::StatusCode;
+use actix_web::Result;
+use actix_web::web::Json;
+use color_eyre::eyre::Result as AppResult;
+use feed_rs::Feed;
+use log::error;
+use lru_time_cache::LruCache;
 
-extern crate feed_rs;
-
-extern crate lru_time_cache;
-
+use la_metric::FeedConvertCommand;
+use la_metric::LaMetricFrame;
+use la_metric::LaMetricFrames;
+use la_metric::LaMetricResponse;
+use la_metric::TextFrame;
+use rssfeed::RssFeedConfig;
+use rssfeed::RssFeedError;
 
 #[cfg(test)]
 mod tests;
 
 mod la_metric;
 
-use la_metric::LaMetricFrame;
-use la_metric::LaMetricResponse;
-use la_metric::TextFrame;
-use la_metric::FeedConvertCommand;
-use la_metric::LaMetricFrames;
-
 mod rssfeed;
-
-use rssfeed::RssFeedConfig;
-use rssfeed::RssFeedError;
-use lru_time_cache::LruCache;
-
-use rocket::Rocket;
-use rocket_contrib::json::Json;
-use rocket::request::Form;
-use std::string::String;
-use feed_rs::Feed;
-use std::time::Duration;
-use std::ops::Deref;
-use std::sync::Mutex;
-
-
 mod index;
 
-
 lazy_static! {
-    static ref APP_CACHE: Mutex<LruCache<String, Feed>> = Mutex::new(LruCache::<String, Feed>::with_expiry_duration(Duration::from_secs(60*10))); // 10min
+    static ref APP_CACHE: Mutex<LruCache<String, Feed>> = Mutex::new(LruCache::<String, Feed>::with_expiry_duration(Duration::from_secs(60))); // 1min
 }
 
 
-#[get("/convert?<rss_feed..>")]
-fn convert(rss_feed: Form<RssFeedConfig>) -> Json<LaMetricResponse> {
-    Json(
+async fn convert(web::Query(rss_feed): web::Query<RssFeedConfig>) -> impl Responder {
+    HttpResponse::Ok().json(
         rss_feed
             .load()
             .map(|feed| {
@@ -71,6 +50,7 @@ fn convert(rss_feed: Form<RssFeedConfig>) -> Json<LaMetricResponse> {
                 |err: RssFeedError| -> Result<LaMetricFrames, RssFeedError> {
                     Ok(vec![
                         match err {
+                            RssFeedError::CacheErr(error) |
                             RssFeedError::DownloadErr(error) |
                             RssFeedError::ParseErr(error) => LaMetricFrame::TextFrame(TextFrame {
                                 text: error.to_string(),
@@ -83,20 +63,33 @@ fn convert(rss_feed: Form<RssFeedConfig>) -> Json<LaMetricResponse> {
             .map(|mut gen_frames: LaMetricFrames| {
                 let mut frames = vec![LaMetricFrame::TextFrame(TextFrame::from(rss_feed.clone()))];
                 frames.append(&mut gen_frames);
-                LaMetricResponse { frames: frames }
+                LaMetricResponse { frames }
             })
             .unwrap(),
     )
 }
 
 
-fn rocket() -> Rocket {
+struct ApiData {
+    cache: RwLock<LruCache<String, Feed>>
+}
+
+#[actix_web::main]
+async fn main() -> AppResult<()> {
+    pretty_env_logger::init();
+
     // Ensure APP_CACHE is bound
     let _ = APP_CACHE.deref();
 
-    rocket::ignite().mount("/", routes![index::index, convert])
-}
 
-fn main() {
-    rocket().launch();
+    // index::index, convert
+    HttpServer::new(|| App::new()
+        .wrap(middleware::Logger::default())
+        .route("/", web::get().to(index::index))
+        .route("/convert", web::get().to(convert))
+    )
+        .bind("127.0.0.1:8080")?
+        .run()
+        .await
+        .map_err(|err| err.into())
 }

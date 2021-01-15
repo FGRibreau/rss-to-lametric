@@ -1,7 +1,5 @@
-use rssfeed::RssFeedConfig;
-use rssfeed::Feed;
-
-
+use crate::rssfeed::{RssFeedConfig, Feed};
+use serde_derive::{Serialize, Deserialize};
 
 #[derive(Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(untagged)]
