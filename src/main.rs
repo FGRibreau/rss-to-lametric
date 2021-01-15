@@ -69,11 +69,6 @@ async fn convert(web::Query(rss_feed): web::Query<RssFeedConfig>) -> impl Respon
     )
 }
 
-
-struct ApiData {
-    cache: RwLock<LruCache<String, Feed>>
-}
-
 #[actix_web::main]
 async fn main() -> AppResult<()> {
     pretty_env_logger::init();
@@ -81,14 +76,13 @@ async fn main() -> AppResult<()> {
     // Ensure APP_CACHE is bound
     let _ = APP_CACHE.deref();
 
-
     // index::index, convert
     HttpServer::new(|| App::new()
         .wrap(middleware::Logger::default())
         .route("/", web::get().to(index::index))
         .route("/convert", web::get().to(convert))
     )
-        .bind("127.0.0.1:8080")?
+        .bind(format!("{}:{}", option_env!("HOST").unwrap_or("0.0.0.0"), option_env!("PORT").unwrap_or("8080")))?
         .run()
         .await
         .map_err(|err| err.into())

@@ -7,7 +7,7 @@ use reqwest::Response;
 use reqwest::Url;
 use serde_derive::{Serialize, Deserialize};
 use crate::APP_CACHE;
-use log::info;
+use log::debug;
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct RssFeedConfig {
@@ -31,12 +31,12 @@ impl RssFeedConfig {
             let mut cache = APP_CACHE.lock().unwrap();
             let cached_feed: Option<&Feed> = cache.get(&self.url);
             if cached_feed.is_some() {
-                info!("Found item {:?} in cache", self.url);
+                debug!("Found item {:?} in cache", self.url);
                 return Ok(cached_feed.unwrap().clone());
             }
         }
 
-        info!("Downloading {:?}", self.url);
+        debug!("Downloading {:?}", self.url);
         self.download()
             .and_then(|rss| self.parse(rss))
             .and_then(|feed| {
