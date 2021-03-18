@@ -6,10 +6,10 @@ use std::string::String;
 use std::sync::{Mutex, RwLock};
 use std::time::Duration;
 
-use actix_web::{App, get, HttpResponse, HttpServer, middleware, Responder, web};
 use actix_web::http::StatusCode;
-use actix_web::Result;
 use actix_web::web::Json;
+use actix_web::Result;
+use actix_web::{get, middleware, web, App, HttpResponse, HttpServer, Responder};
 use color_eyre::eyre::Result as AppResult;
 use feed_rs::Feed;
 use log::error;
@@ -28,13 +28,12 @@ mod tests;
 
 mod la_metric;
 
-mod rssfeed;
 mod index;
+mod rssfeed;
 
 lazy_static! {
     static ref APP_CACHE: Mutex<LruCache<String, Feed>> = Mutex::new(LruCache::<String, Feed>::with_expiry_duration(Duration::from_secs(60))); // 1min
 }
-
 
 async fn convert(web::Query(rss_feed): web::Query<RssFeedConfig>) -> impl Responder {
     HttpResponse::Ok().json(
@@ -48,16 +47,14 @@ async fn convert(web::Query(rss_feed): web::Query<RssFeedConfig>) -> impl Respon
             })
             .or_else(
                 |err: RssFeedError| -> Result<LaMetricFrames, RssFeedError> {
-                    Ok(vec![
-                        match err {
-                            RssFeedError::CacheErr(error) |
-                            RssFeedError::DownloadErr(error) |
-                            RssFeedError::ParseErr(error) => LaMetricFrame::TextFrame(TextFrame {
-                                text: error.to_string(),
-                                icon: None,
-                            }),
-                        },
-                    ])
+                    Ok(vec![match err {
+                        RssFeedError::CacheErr(error)
+                        | RssFeedError::DownloadErr(error)
+                        | RssFeedError::ParseErr(error) => LaMetricFrame::TextFrame(TextFrame {
+                            text: error.to_string(),
+                            icon: None,
+                        }),
+                    }])
                 },
             )
             .map(|mut gen_frames: LaMetricFrames| {
@@ -77,13 +74,18 @@ async fn main() -> AppResult<()> {
     let _ = APP_CACHE.deref();
 
     // index::index, convert
-    HttpServer::new(|| App::new()
-        .wrap(middleware::Logger::default())
-        .route("/", web::get().to(index::index))
-        .route("/convert", web::get().to(convert))
-    )
-        .bind(format!("{}:{}", option_env!("HOST").unwrap_or("0.0.0.0"), option_env!("PORT").unwrap_or("8080")))?
-        .run()
-        .await
-        .map_err(|err| err.into())
+    HttpServer::new(|| {
+        App::new()
+            .wrap(middleware::Logger::default())
+            .route("/", web::get().to(index::index))
+            .route("/convert", web::get().to(convert))
+    })
+    .bind(format!(
+        "{}:{}",
+        option_env!("HOST").unwrap_or("0.0.0.0"),
+        option_env!("PORT").unwrap_or("8080")
+    ))?
+    .run()
+    .await
+    .map_err(|err| err.into())
 }

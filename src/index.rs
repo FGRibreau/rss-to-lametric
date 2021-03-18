@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 
-use actix_web::{get, HttpResponse, Responder, Result, web};
 use actix_web::web::Json;
-use serde_derive::{Serialize, Deserialize};
+use actix_web::{get, web, HttpResponse, Responder, Result};
+use serde_derive::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
 pub struct HelpResponse {
@@ -36,20 +36,19 @@ pub async fn index() -> impl Responder {
         }],
     })
 
-
     /*Json(HelpResponse {
-        "name": env!("CARGO_PKG_NAME"),
-        "description": env!("CARGO_PKG_DESCRIPTION"),
-        "homepage": env!("CARGO_PKG_HOMEPAGE"),
-        "version": env!("CARGO_PKG_VERSION"),
-        "usage": vec![json!({
-        "path": "/convert?<query>",
-        "query": RssFeedConfig {
-        title: "title of your feed".to_string(),
-        icon: "icon number, e.g. i14532".to_string(),
-        url: "http://my-domain.com/my-rss.xml".to_string(),
-                limit: 10
-            }
-      })]
-  })*/
+          "name": env!("CARGO_PKG_NAME"),
+          "description": env!("CARGO_PKG_DESCRIPTION"),
+          "homepage": env!("CARGO_PKG_HOMEPAGE"),
+          "version": env!("CARGO_PKG_VERSION"),
+          "usage": vec![json!({
+          "path": "/convert?<query>",
+          "query": RssFeedConfig {
+          title: "title of your feed".to_string(),
+          icon: "icon number, e.g. i14532".to_string(),
+          url: "http://my-domain.com/my-rss.xml".to_string(),
+                  limit: 10
+              }
+        })]
+    })*/
 }

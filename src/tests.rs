@@ -1,8 +1,8 @@
 extern crate serde_json;
 
-use actix_web::{http, test, web};
-use actix_web::client::Client;
 use super::*;
+use actix_web::client::Client;
+use actix_web::{http, test, web};
 
 use crate::la_metric::LaMetricFrame;
 use crate::la_metric::LaMetricResponse;

@@ -1,5 +1,5 @@
-use crate::rssfeed::{RssFeedConfig, Feed};
-use serde_derive::{Serialize, Deserialize};
+use crate::rssfeed::{Feed, RssFeedConfig};
+use serde_derive::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(untagged)]
@@ -39,8 +39,6 @@ pub struct FeedConvertCommand {
     pub feed: Feed,
     pub limit: usize,
 }
-
-
 
 impl From<FeedConvertCommand> for LaMetricFrames {
     fn from(feed_convert_command: FeedConvertCommand) -> Self {

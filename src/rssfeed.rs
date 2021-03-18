@@ -1,13 +1,14 @@
+use feed_rs::parser::parse as ParseRSS;
+pub use feed_rs::Feed;
 use std::result::Result::Ok;
 use std::sync::{Mutex, RwLock};
-pub use feed_rs::Feed;
-use feed_rs::parser::parse as ParseRSS;
+// utiliser https://simplabs.com/blog/2020/12/31/xml-and-rust/ ?
+use crate::APP_CACHE;
+use log::debug;
 use lru_time_cache::LruCache;
 use reqwest::Response;
 use reqwest::Url;
-use serde_derive::{Serialize, Deserialize};
-use crate::APP_CACHE;
-use log::debug;
+use serde_derive::{Deserialize, Serialize};
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct RssFeedConfig {
@@ -21,9 +22,8 @@ pub struct RssFeedConfig {
 pub enum RssFeedError {
     DownloadErr(String),
     ParseErr(String),
-    CacheErr(String)
+    CacheErr(String),
 }
-
 
 impl RssFeedConfig {
     pub fn load(&self) -> Result<Feed, RssFeedError> {
@@ -40,7 +40,10 @@ impl RssFeedConfig {
         self.download()
             .and_then(|rss| self.parse(rss))
             .and_then(|feed| {
-                APP_CACHE.lock().unwrap().insert(self.url.clone(), feed.clone());
+                APP_CACHE
+                    .lock()
+                    .unwrap()
+                    .insert(self.url.clone(), feed.clone());
                 Ok(feed)
             })
     }
