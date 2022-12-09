@@ -40,10 +40,20 @@ impl RssFeedConfig {
         self.download()
             .and_then(|rss| self.parse(rss))
             .and_then(|feed| {
-                APP_CACHE
+                let res = APP_CACHE
                     .lock()
                     .unwrap()
                     .insert(self.url.clone(), feed.clone());
+
+                debug!(
+                    "Cached url: {:?} {:?}",
+                    self.url,
+                    match res {
+                        Some(x) => "updated value",
+                        None => "inserted value",
+                    }
+                );
+
                 Ok(feed)
             })
     }
@@ -62,6 +72,11 @@ impl RssFeedConfig {
     }
 
     fn parse(&self, mut rss: reqwest::Response) -> Result<Feed, RssFeedError> {
+        debug!(
+            "Downloaded feed url:{:?} headers:{:?}",
+            rss.url(),
+            rss.headers()
+        );
         ParseRSS(&mut rss).ok_or(RssFeedError::ParseErr("Could not parse feed".to_string()))
     }
 }
