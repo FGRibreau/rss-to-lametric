@@ -16,7 +16,6 @@ edition = "2018"
 # cargo install cargo-release
 # cargo release --dry-run
 pre-release-commit-message = "Release {{version}} 🎉🎉"
-pre-release-replacements = [ {file="README.md", search="Current release: [a-z0-9\\.-]+", replace="Current release: {{version}}"} ]
 
 [dependencies]
 actix-rt = "2.7.0"
