@@ -1950,7 +1950,7 @@ dependencies = [
 
 [[package]]
 name = "rss-to-lametric"
-version = "1.0.3-alpha.0"
+version = "2.0.0"
 dependencies = [
  "actix-rt",
  "actix-web",
