@@ -1,73 +1,82 @@
-extern crate serde_json;
-
 use super::*;
-use actix_web::client::Client;
-use actix_web::{http, test, web};
-
-use crate::la_metric::LaMetricFrame;
-use crate::la_metric::LaMetricResponse;
-use crate::la_metric::TextFrame;
-
 use crate::index::{index, HelpResponse};
+use actix_web::http::header::ContentType;
+use actix_web::test;
+use actix_web::test::{call_service, read_body_json};
+use lazy_static::lazy_static;
+use log::debug;
 
 lazy_static! {
     #[derive(Copy, Clone, Debug)]
     static ref RSS_FEED: String = "http://www.mocky.io/v2/59fcfedb310000cb1b4fc7a9".to_string();
 }
 
-#[actix_rt::test]
+#[actix_web::test]
 async fn test_main_route() {
-    let mut app = test::init_service(App::new().route("/", web::get().to(index))).await;
-    let req = test::TestRequest::with_header("content-type", "application/json").to_request();
-    let resp: HelpResponse = test::read_response_json(&mut app, req).await;
+    let req = test::TestRequest::default()
+        .uri("/")
+        .insert_header(ContentType::json())
+        .to_request();
+
+    let app = test::init_service(App::new().route("/", web::get().to(index))).await;
+    let resp: HelpResponse = test::call_and_read_body_json(&app, req).await;
+
     assert_eq!(resp.name, "rss-to-lametric");
 }
 
-/*
-#[actix_rt::test]
-fn test_custom_title_and_icon_with_empty_rss() {
+async fn get_lametric_response(uri: String) -> LaMetricResponse {
+    let req = test::TestRequest::get().uri(&uri).to_request();
+    let app = test::init_service(App::new().route("/convert/", web::get().to(convert))).await;
+    let res = call_service(&app, req).await;
+    let json = read_body_json(res).await;
+    debug!("json: {:?}", json);
+    json
+}
+
+#[actix_web::test]
+async fn test_custom_title_and_icon_with_empty_rss() {
     assert_eq!(
         get_lametric_response(format!(
             "/convert/?title=Custom&icon=icon&limit=0&url={}",
             &**RSS_FEED
-        )),
+        ))
+        .await,
         LaMetricResponse {
-            frames: vec![
-                LaMetricFrame::TextFrame(TextFrame {
-                    text: "Custom".to_string(),
-                    icon: Some("icon".to_string()),
-                }),
-            ],
+            frames: vec![LaMetricFrame::TextFrame(TextFrame {
+                text: "Custom".to_string(),
+                icon: Some("icon".to_string()),
+            }),],
         }
     );
 }
 
-#[actix_rt::test]
-fn test_invalid_rss() {
-    let resp: LaMetricResponse = get_lametric_response(format!(
-        "/convert/?title=Custom&icon=icon&limit=0&url=http://127.0.0.1.com/plop"
-    ));
+/*
+#[actix_web::test]
+async fn test_invalid_rss() {
+    let resp: LaMetricResponse = get_lametric_response(
+        "/convert/?title=Custom&icon=icon&limit=1&url=http%3A//127.0.0.1.com/plop".to_string(),
+    )
+    .await;
 
     assert_eq!(resp.frames.len(), 2);
 
-    let last = &resp.frames[1];
+    let LaMetricFrame::TextFrame(text_frame) = &resp.frames[1];
 
-    let text_frame = match last {
-        LaMetricFrame::TextFrame(text_frame) => text_frame,
-    };
+    assert!(text_frame
+        .text
 
-    assert!(text_frame.text.contains(
-        "failed to lookup address information",
-    ))
+        .contains("failed to lookup address information",))
 }
+*/
 
-#[actix_rt::test]
-fn test_valid_la_metric_data_output() {
+#[actix_web::test]
+async fn test_valid_la_metric_data_output() {
     assert_eq!(
         get_lametric_response(format!(
             "/convert/?title=Ouest-France&icon=i14532&limit=4&url={}",
             &**RSS_FEED
-        )),
+        ))
+        .await,
         LaMetricResponse {
             frames: vec![
                 LaMetricFrame::TextFrame(TextFrame {
@@ -98,15 +107,13 @@ fn test_valid_la_metric_data_output() {
     );
 }
 
-#[actix_rt::test]
-fn test_valid_la_metric_json_output() {
+#[actix_web::test]
+async fn test_valid_la_metric_json_output() {
     assert_eq!(
-        get(&format!(
+        serde_json::to_string(&get_lametric_response(format!(
             "/convert/?title=Ouest-France&icon=i14532&limit=4&url={}",
             &**RSS_FEED
-        )),
+        )).await).unwrap(),
         "{\"frames\":[{\"text\":\"Ouest-France\",\"icon\":\"i14532\"},{\"text\":\"Stade Rennais. Le président du club René Ruello annonce sa démission\",\"icon\":null},{\"text\":\"Direction de LREM. 4 listes en compétition pour le bureau exécutif\",\"icon\":null},{\"text\":\"La police de New York a un \\\"vrai dossier\\\" sur Weinstein\",\"icon\":null},{\"text\":\"Ligue 1. Le Stade Rennais poursuit sa belle série face à Bordeaux\",\"icon\":null}]}"
     );
 }
-
-*/

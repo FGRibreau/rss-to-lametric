@@ -1,4 +1,4 @@
-> Your favorite *news* (RSS feed) directly from your [*LaMetric*](http://bit.ly/2zcEaTz) 🎩
+> Your favorite *news* (RSS feed) directly from your [*LaMetric*](https://store.lametric.com/?rfsn=853404.8b38b6) 🎩
 
 [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/FGRibreau/rss-to-lametric) [![codecov](https://codecov.io/gh/FGRibreau/rss-to-lametric/branch/master/graph/badge.svg)](https://codecov.io/gh/FGRibreau/rss-to-lametric)
 [![Cargo version](https://img.shields.io/crates/v/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/l/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Crates.io](https://img.shields.io/crates/d/rss-to-lametric.svg)](https://crates.io/crates/rss-to-lametric) [![Slack](https://img.shields.io/badge/Slack-Join%20our%20tech%20community-17202A?logo=slack)](https://join.slack.com/t/fgribreau/shared_invite/zt-edpjwt2t-Zh39mDUMNQ0QOr9qOj~jrg)
@@ -58,7 +58,7 @@ curl --silent http://localhost:8080/
 
 ```json
 {
-  "description": "🛫 Fastest way to expose a RSS feed to your LaMetric - http://bit.ly/2zcEaTz 🎩",
+  "description": "🛫 Fastest way to expose a RSS feed to your LaMetric - https://store.lametric.com/?rfsn=853404.8b38b6 🎩",
   "homepage": "https://github.com/FGRibreau/rss-to-lametric",
   "name": "rss-to-lametric",
   "usage": [

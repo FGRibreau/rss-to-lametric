@@ -1,12 +1,7 @@
+use cached::proc_macro::once;
+use feed_rs::model::Feed;
 use feed_rs::parser::parse as ParseRSS;
-pub use feed_rs::Feed;
-use std::result::Result::Ok;
-use std::sync::{Mutex, RwLock};
-// utiliser https://simplabs.com/blog/2020/12/31/xml-and-rust/ ?
-use crate::APP_CACHE;
-use log::debug;
-use lru_time_cache::LruCache;
-use reqwest::Response;
+use log::{debug, error};
 use reqwest::Url;
 use serde_derive::{Deserialize, Serialize};
 
@@ -20,63 +15,43 @@ pub struct RssFeedConfig {
 
 #[derive(Debug, Serialize)]
 pub enum RssFeedError {
-    DownloadErr(String),
-    ParseErr(String),
-    CacheErr(String),
+    Download(String),
+    Parse(String),
+    Cache(String),
+}
+
+// cache each call for 1 minutes
+#[once(time = 60, result = true, sync_writes = true)]
+fn get_rss(url: String) -> Result<Feed, RssFeedError> {
+    let parsed_url = Url::parse(&url).ok().unwrap();
+
+    let client = reqwest::Client::new();
+
+    debug!("Downloading {:?}", url);
+
+    client
+        .get(parsed_url.clone())
+        .basic_auth(parsed_url.username(), parsed_url.password())
+        .send()
+        .map_err(|err| format!("{}", err))
+        .map_err(RssFeedError::Download)
+        .map(|mut rss| {
+            debug!(
+                "Downloaded feed url:{:?} headers:{:?}",
+                rss.url(),
+                rss.headers()
+            );
+            ParseRSS(&mut rss)
+                .map_err(|err| {
+                    error!("Could not parse feed:{:?} {:?}", rss.url(), err);
+                    RssFeedError::Parse("Could not parse feed".to_string())
+                })
+                .unwrap()
+        })
 }
 
 impl RssFeedConfig {
     pub fn load(&self) -> Result<Feed, RssFeedError> {
-        {
-            let mut cache = APP_CACHE.lock().unwrap();
-            let cached_feed: Option<&Feed> = cache.get(&self.url);
-            if cached_feed.is_some() {
-                debug!("Found item {:?} in cache", self.url);
-                return Ok(cached_feed.unwrap().clone());
-            }
-        }
-
-        debug!("Downloading {:?}", self.url);
-        self.download()
-            .and_then(|rss| self.parse(rss))
-            .and_then(|feed| {
-                let res = APP_CACHE
-                    .lock()
-                    .unwrap()
-                    .insert(self.url.clone(), feed.clone());
-
-                debug!(
-                    "Cached url: {:?} {:?}",
-                    self.url,
-                    match res {
-                        Some(x) => "updated value",
-                        None => "inserted value",
-                    }
-                );
-
-                Ok(feed)
-            })
-    }
-
-    fn download(&self) -> Result<Response, RssFeedError> {
-        let parsed_url = Url::parse(&self.url).ok().unwrap();
-
-        let client = reqwest::Client::new();
-
-        client
-            .get(parsed_url.clone())
-            .basic_auth(parsed_url.username(), parsed_url.password())
-            .send()
-            .map_err(|err| format!("{}", err))
-            .map_err(RssFeedError::DownloadErr)
-    }
-
-    fn parse(&self, mut rss: reqwest::Response) -> Result<Feed, RssFeedError> {
-        debug!(
-            "Downloaded feed url:{:?} headers:{:?}",
-            rss.url(),
-            rss.headers()
-        );
-        ParseRSS(&mut rss).ok_or(RssFeedError::ParseErr("Could not parse feed".to_string()))
+        get_rss(self.url.clone())
     }
 }

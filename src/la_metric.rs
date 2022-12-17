@@ -1,4 +1,5 @@
-use crate::rssfeed::{Feed, RssFeedConfig};
+use crate::rssfeed::RssFeedConfig;
+use feed_rs::model::Feed;
 use serde_derive::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Eq, PartialEq)]
@@ -23,7 +24,7 @@ pub struct TextFrame {
 impl TextFrame {
     pub fn new(text: String, icon: String) -> TextFrame {
         TextFrame {
-            text: text,
+            text,
             icon: Some(icon),
         }
     }
@@ -49,7 +50,11 @@ impl From<FeedConvertCommand> for LaMetricFrames {
             .take(feed_convert_command.limit)
             .map(|entry| {
                 LaMetricFrame::TextFrame(TextFrame {
-                    text: entry.title.clone().unwrap_or("".to_string()),
+                    text: entry
+                        .title
+                        .clone()
+                        .map(|x| x.content)
+                        .unwrap_or_else(|| "".to_string()),
                     icon: None,
                 })
             })

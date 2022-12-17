@@ -1,19 +1,49 @@
-#[macro_use]
-extern crate lazy_static;
+//! # Rss-to-lametric
+//!
+//! Your favorite news (RSS feed) directly from your [LaMetric 🎩](https://store.lametric.com/?rfsn=853404.8b38b6)
 
-use std::ops::Deref;
-use std::string::String;
-use std::sync::{Mutex, RwLock};
-use std::time::Duration;
+#![doc(
+    html_logo_url = "https://raw.githubusercontent.com/FGRibreau/rss-to-lametric/master/docs/lametric-app.jpg",
+    test(attr(forbid(warnings)))
+)]
+// https://github.com/maidsafe/QA/blob/master/Documentation/Rust%20Lint%20Checks.md
+#![forbid(
+    arithmetic_overflow,
+    mutable_transmutes,
+    no_mangle_const_items,
+    unknown_crate_types
+)]
+#![deny(
+    deprecated,
+    improper_ctypes,
+    missing_docs,
+    non_shorthand_field_patterns,
+    overflowing_literals,
+    stable_features,
+    unconditional_recursion,
+    unknown_lints,
+    unsafe_code,
+    unused,
+    unused_allocation,
+    unused_attributes,
+    unused_comparisons,
+    unused_features,
+    unused_parens,
+    while_true,
+    warnings
+)]
+#![warn(
+    trivial_casts,
+    trivial_numeric_casts,
+    unused_extern_crates,
+    unused_import_braces,
+    unused_qualifications,
+    unused_results
+)]
 
-use actix_web::http::StatusCode;
-use actix_web::web::Json;
 use actix_web::Result;
-use actix_web::{get, middleware, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{middleware, web, App, HttpResponse, HttpServer, Responder};
 use color_eyre::eyre::Result as AppResult;
-use feed_rs::Feed;
-use log::error;
-use lru_time_cache::LruCache;
 
 use la_metric::FeedConvertCommand;
 use la_metric::LaMetricFrame;
@@ -31,27 +61,23 @@ mod la_metric;
 mod index;
 mod rssfeed;
 
-lazy_static! {
-    static ref APP_CACHE: Mutex<LruCache<String, Feed>> = Mutex::new(LruCache::<String, Feed>::with_expiry_duration(Duration::from_secs(60))); // 1min
-}
-
 async fn convert(web::Query(rss_feed): web::Query<RssFeedConfig>) -> impl Responder {
     HttpResponse::Ok().json(
         rss_feed
             .load()
             .map(|feed| {
                 LaMetricFrames::from(FeedConvertCommand {
-                    feed: feed,
+                    feed,
                     limit: rss_feed.limit,
                 })
             })
             .or_else(
                 |err: RssFeedError| -> Result<LaMetricFrames, RssFeedError> {
                     Ok(vec![match err {
-                        RssFeedError::CacheErr(error)
-                        | RssFeedError::DownloadErr(error)
-                        | RssFeedError::ParseErr(error) => LaMetricFrame::TextFrame(TextFrame {
-                            text: error.to_string(),
+                        RssFeedError::Cache(error)
+                        | RssFeedError::Download(error)
+                        | RssFeedError::Parse(error) => LaMetricFrame::TextFrame(TextFrame {
+                            text: error,
                             icon: None,
                         }),
                     }])
@@ -70,13 +96,12 @@ async fn convert(web::Query(rss_feed): web::Query<RssFeedConfig>) -> impl Respon
 async fn main() -> AppResult<()> {
     pretty_env_logger::init();
 
-    // Ensure APP_CACHE is bound
-    let _ = APP_CACHE.deref();
-
     // index::index, convert
-    HttpServer::new(|| {
+    HttpServer::new(move || {
         App::new()
             .wrap(middleware::Logger::default())
+            .wrap(middleware::NormalizePath::trim())
+            .wrap(middleware::Compress::default())
             .route("/", web::get().to(index::index))
             .route("/convert", web::get().to(convert))
     })

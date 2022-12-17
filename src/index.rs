@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 
-use actix_web::web::Json;
-use actix_web::{get, web, HttpResponse, Responder, Result};
+use actix_web::{HttpResponse, Responder};
 use serde_derive::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
@@ -18,9 +17,10 @@ pub struct HelpRoute {
     pub path: String,
     pub query: HashMap<String, String>,
 }
-
+#[allow(unused_results)]
 pub async fn index() -> impl Responder {
     let mut convert_query = HashMap::new();
+
     convert_query.insert("title".into(), "title of your feed".into());
     convert_query.insert("icon".into(), "icon number, e.g. i14532".into());
     convert_query.insert("url".into(), "http://my-domain.com/my-rss.xml".into());
