@@ -1,4 +1,4 @@
-use cached::proc_macro::once;
+use cached::proc_macro::cached;
 use feed_rs::model::Feed;
 use feed_rs::parser::parse as ParseRSS;
 use log::{debug, error};
@@ -21,7 +21,7 @@ pub enum RssFeedError {
 }
 
 // cache each call for 1 minutes
-#[once(time = 60, result = true, sync_writes = true)]
+#[cached(time = 60, result = true, sync_writes = true)]
 fn get_rss(url: String) -> Result<Feed, RssFeedError> {
     let parsed_url = Url::parse(&url).ok().unwrap();
 
