@@ -35,18 +35,16 @@ fn get_rss(url: String) -> Result<Feed, RssFeedError> {
         .send()
         .map_err(|err| format!("{}", err))
         .map_err(RssFeedError::Download)
-        .map(|mut rss| {
+        .and_then(|mut rss| {
             debug!(
                 "Downloaded feed url:{:?} headers:{:?}",
                 rss.url(),
                 rss.headers()
             );
-            ParseRSS(&mut rss)
-                .map_err(|err| {
-                    error!("Could not parse feed:{:?} {:?}", rss.url(), err);
-                    RssFeedError::Parse("Could not parse feed".to_string())
-                })
-                .unwrap()
+            ParseRSS(&mut rss).map_err(|err| {
+                error!("Could not parse feed:{:?} {:?}", rss.url(), err);
+                RssFeedError::Parse("Could not parse feed".to_string())
+            })
         })
 }
 
